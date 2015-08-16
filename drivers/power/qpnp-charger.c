@@ -807,6 +807,7 @@ qpnp_chg_is_boost_en_set(struct qpnp_chg_chip *chip)
 
 /*                            */
 #ifndef CONFIG_LGE_PM
+#ifndef CONFIG_MACH_MSM8X10_W5C_VZW
 static int
 qpnp_chg_is_batt_temp_ok(struct qpnp_chg_chip *chip)
 {
@@ -823,6 +824,7 @@ qpnp_chg_is_batt_temp_ok(struct qpnp_chg_chip *chip)
 
 	return (batt_rt_sts & BAT_TEMP_OK_IRQ) ? 1 : 0;
 }
+#endif
 #endif
 static int
 qpnp_chg_is_batt_present(struct qpnp_chg_chip *chip)
@@ -1899,6 +1901,7 @@ qpnp_chg_usb_usbin_valid_irq_handler(int irq, void *_chip)
 
 /*                            */
 #ifndef CONFIG_LGE_PM
+#ifndef CONFIG_MACH_MSM8X10_W5C_VZW
 static irqreturn_t
 qpnp_chg_bat_if_batt_temp_irq_handler(int irq, void *_chip)
 {
@@ -1912,6 +1915,7 @@ qpnp_chg_bat_if_batt_temp_irq_handler(int irq, void *_chip)
 	power_supply_changed(&chip->batt_psy);
 	return IRQ_HANDLED;
 }
+#endif
 #endif
 static irqreturn_t
 qpnp_chg_bat_if_batt_pres_irq_handler(int irq, void *_chip)
@@ -4906,6 +4910,7 @@ qpnp_chg_request_irqs(struct qpnp_chg_chip *chip)
 
 /*                            */
 #ifndef CONFIG_LGE_PM
+#ifndef CONFIG_MACH_MSM8X10_W5C_VZW
 			chip->batt_temp_ok.irq = spmi_get_irq_byname(spmi,
 						spmi_resource, "bat-temp-ok");
 			if (chip->batt_temp_ok.irq < 0) {
@@ -4923,6 +4928,7 @@ qpnp_chg_request_irqs(struct qpnp_chg_chip *chip)
 			}
 
 			enable_irq_wake(chip->batt_temp_ok.irq);
+#endif
 #endif
 			break;
 		case SMBB_BUCK_SUBTYPE:
