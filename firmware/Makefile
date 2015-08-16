@@ -33,6 +33,14 @@ fw-shipped-$(CONFIG_TOUCHSCREEN_LGE_MELFAS) += melfas/mms100a_core54_v01.mfsb
 fw-shipped-$(CONFIG_TOUCHSCREEN_LGE_MELFAS) += melfas/mms100s_core32_v01.mfsb
 fw-shipped-$(CONFIG_TOUCHSCREEN_LGE_MELFAS) += $(touch_fw_files)
 
+synaptics_img_file := $(wildcard $(srctree)/firmware/synaptics/*.img)
+$(foreach var, $(synaptics_img_file),  $(shell objcopy -I binary -O ihex $(var) $(var).ihex))
+synaptics_fw_list := $(subst .ihex, , $(notdir $(wildcard $(srctree)/firmware/synaptics/*.ihex)))
+synaptics_fw_files := $(foreach var, $(synaptics_fw_list), synaptics/$(var))
+touch_synap_limit_txt := $(wildcard $(srctree)/firmware/synaptics/*.txt)
+$(foreach var, $(touch_synap_limit_txt),  $(shell objcopy -I binary -O ihex $(var) $(var).ihex))
+fw-shipped-$(CONFIG_TOUCHSCREEN_SYNAPTICS_DSX_FW_UPDATE) += $(synaptics_fw_files)
+
 ifdef CONFIG_ACENIC_OMIT_TIGON_I
 acenic-objs := acenic/tg2.bin
 fw-shipped- += acenic/tg1.bin
